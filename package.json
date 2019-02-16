@@ -24,6 +24,7 @@
   "homepage": "https://github.com/mauruco/lcd16x2journal#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "googleapis": "^27.0.0",
     "lcd": "^2.0.4",
     "onoff": "~1.1.8",
     "q": "~1.5.0",
