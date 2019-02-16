@@ -1,0 +1,32 @@
+{
+  "name": "lcd16x2journal",
+  "version": "1.0.0",
+  "description": "simple raspberry notification station",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mauruco/lcd16x2journal.git"
+  },
+  "keywords": [
+    "raspberry",
+    "lcd16x2",
+    "node",
+    "api"
+  ],
+  "author": "Mauro Brizida",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mauruco/lcd16x2journal/issues"
+  },
+  "homepage": "https://github.com/mauruco/lcd16x2journal#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "lcd": "^2.0.4",
+    "onoff": "~1.1.8",
+    "q": "~1.5.0",
+    "sleep": "^6.0.0"
+  }
+}
