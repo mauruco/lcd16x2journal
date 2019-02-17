@@ -11,7 +11,7 @@ axios.get(endPoint)
     return;
 
   let infos = {
-    name: 'Openweathermap',
+    name: 'openweathermap',
     firstLine: `T: ${parseInt(res.data.main.temp)}C W: ${parseInt(res.data.wind.speed)}km/h`,
     secondLine: `${res.data.weather[0].description}`
   };

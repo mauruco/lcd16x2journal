@@ -2,6 +2,7 @@ const Lcd = require('lcd');
 const fs = require('fs');
 const timeToWait = 3000;
 
+// lcd setings
 let myLcd = new Lcd({
   rs: 21,
   e: 20,
@@ -9,7 +10,7 @@ let myLcd = new Lcd({
   cols: 16,
   rows: 2
 });
-
+// read journals
 const getApiJournals = () => {
   
   return new Promise((resolve, reject) => {
@@ -17,7 +18,7 @@ const getApiJournals = () => {
     fs.readdir(`${__dirname}/journals`, (error, journals) => { resolve(journals) });
   });
 }
-
+// push to one obj
 const groupJournals = (allJournals) => {
 
   return new Promise((resolve, reject) => {
@@ -28,16 +29,21 @@ const groupJournals = (allJournals) => {
       journals.push(fs.readFileSync(`${__dirname}/journals/${journal}`, 'utf8'));
     });
     
-    // min um journal teremos sempre
-    let date = new Date().toISOString();
-    date = `${date[8]}${date[9]}/${date[5]}${date[6]}/${date[0]}${date[1]}${date[2]}${date[3]}`;
-    let time = new Date().toTimeString().slice(0, 5);
-    journals.push(`Data: ${date}\nHora: ${time}`);
+    // time journals is always present
+    let d = new Date();
+    let weekDays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'];
+    let secondLines = ['Preguica', 'Comecou', 'Continua', 'Acaba logo', 'Ta acabando', 'Sextou', 'Partiu'];
+    let weekDay = weekDays[d.getDay()];
+    let secondLine = secondLines[d.getDay()];
+    let date = d.toISOString();
+    date = `${date[8]}${date[9]}/${date[5]}${date[6]}`;
+    let time = d.toTimeString().slice(0, 5);
+    journals.push(`${weekDay}: ${date} ${time}\n${secondLine}`);
   
     resolve(journals);
   });
 };
-
+// print
 const printJournals = (journals, i, init) => {
 
   if(!journals[i]) return;
@@ -47,9 +53,13 @@ const printJournals = (journals, i, init) => {
   myLcd.setCursor(0, 0);
   myLcd.print(lines[0], () => {
 
-    myLcd.setCursor(0, 1);
-    myLcd.print(lines[1]);
-    
+    // second line is optional
+    if(lines[1]){
+
+      myLcd.setCursor(0, 1);
+      myLcd.print(lines[1]);
+    }
+    // next journal
     setTimeout(() => {
       
       if(!journals[i+1]) return init();
@@ -65,11 +75,12 @@ const init = async () => {
   printJournals(journals, 0, init);
 };
 
+// lcd ready
 myLcd.on('ready', () => {
 
   init();
 });
-
+//
 process.on('SIGINT', function() {
   myLcd.clear();
   myLcd.close();

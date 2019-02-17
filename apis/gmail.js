@@ -76,7 +76,7 @@ function listLabels(auth) {
   
   gmail.users.messages.list({ userId: 'me', labelIds: ['UNREAD']}, (err, res) => {
 
-    fs.writeFile(`${__dirname}/../journals/Gmail`, `Inbox GMAIL\nE-Mail: ${res.data.resultSizeEstimate}`, (error) => null);
+    fs.writeFile(`${__dirname}/../journals/gmail`, `Inbox GMAIL\nE-Mail: ${res.data.resultSizeEstimate}`, (error) => null);
   });
 
   // gmail.users.labels.list({
